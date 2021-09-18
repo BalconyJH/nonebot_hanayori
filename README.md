@@ -10,9 +10,10 @@
 _✨ 基于NoneBot2的B站动态推送与开播提醒插件 ✨_
 
 </div>
+
 ## 简介
 
-本插件基于[NoneBot2]()与[go-cqhttp](),可以及时推送B站UP主动态至群聊；并且能够对B站主播的直播间状态进行实时监控，从而实现了主播开播提醒；有效避免了突击直播，无人问津的尴尬局面
+本插件基于[NoneBot2](https://github.com/nonebot/nonebot2)与[go-cqhttp](https://github.com/Mrs4s/go-cqhttp),可以及时推送B站UP主动态至群聊；并且能够对B站主播的直播间状态进行实时监控，从而实现了主播开播提醒；有效避免了突击直播，无人问津的尴尬局面
 
 ## 特色
 
