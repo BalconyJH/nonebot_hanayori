@@ -71,6 +71,7 @@ _✨ 基于NoneBot2的B站动态推送与开播提醒插件 ✨_
    nonebot.load_from_toml("pyproject.toml")#位于本行前
    ```
    2. 使用nb-cli安装
+  
    在你的Bot目录下执行：
    ```bash
    nb plugin install nonebot_plugin_hanayori
