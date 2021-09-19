@@ -15,6 +15,12 @@ _✨ 基于NoneBot2的B站动态推送与开播提醒插件 ✨_
 
 本插件基于[NoneBot2](https://github.com/nonebot/nonebot2)与[go-cqhttp](https://github.com/Mrs4s/go-cqhttp),可以及时推送B站UP主动态至群聊；并且能够对B站主播的直播间状态进行实时监控，从而实现了主播开播提醒；有效避免了突击直播，无人问津的尴尬局面
 
+名字由来：花寄女子寮(Hanayori Joshiryou) 花寄天下第一！！！！！（来自某花寄~~DD~~单推人）
++ 鹿乃ちゃん：B站(316381099)
++ 小东人魚Official：B站(441382432)
++ 花丸晴琉Official：B站(441381282)
++ 野野宫のののOfficial：B站(441403698)
+
 ## 特色
 
 1. **轻依赖**：本插件在编写时尽量避免了采用使用第三方包，以减少依赖项
@@ -70,7 +76,7 @@ _✨ 基于NoneBot2的B站动态推送与开播提醒插件 ✨_
    nonebot.load_plugin("nonebot_plugin_hanayori")#添加此行
    nonebot.load_from_toml("pyproject.toml")#位于本行前
    ```
-   2. 使用nb-cli安装
+   2. 使用nb-cli安装(推荐)
   
    在你的Bot目录下执行：
    ```bash
