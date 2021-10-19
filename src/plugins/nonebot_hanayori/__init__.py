@@ -1,10 +1,12 @@
 from dataclasses import MISSING
+from loguru import logger
 from nonebot import on_command
 from nonebot import rule
 from nonebot import on_request
 from nonebot import on_notice
 from nonebot.adapters import Bot,Event
 from nonebot.adapters.cqhttp.event import MessageEvent, Status
+from nonebot.adapters.cqhttp.message import MessageSegment
 from nonebot.rule import to_me
 from nonebot.adapters.cqhttp.permission import GROUP_ADMIN, GROUP_OWNER, PRIVATE_FRIEND
 from nonebot.permission import SUPERUSER
@@ -37,6 +39,7 @@ async def live():#定时推送直播间状态
     if status!=0 or anchors[live_index][4]==live_status:
         live_index+=1
         return
+    logger.info('检测到 {} 直播状态更新'.format(anchors[live_index][1]))
     model.UpdateLive(anchors[live_index][0],live_status)
     cards=model.GetALLCard(anchors[live_index][0])
     for card in cards:
@@ -44,7 +47,7 @@ async def live():#定时推送直播间状态
             if card[1]==1:#是群聊
                 if card[4]==1:#需要@全体成员
                     await schedBot.call_api('send_msg',**{
-                        'message':'[CQ:at,qq=all]'+content,
+                        'message':MessageSegment.at('all')+content,
                         'group_id':card[0]
                     })
                 else:#不需要@全体成员
@@ -70,6 +73,7 @@ async def dynamic():#定时推送最新用户动态
     if status!=0 or anchors[dynamic_index][2]==dynamic_id:
         dynamic_index+=1
         return
+    logger.info('检测到 {} 动态更新'.format(anchors[dynamic_index][1]))
     model.UpdateDynamic(anchors[dynamic_index][0],dynamic_id)
     cards=model.GetALLCard(anchors[dynamic_index][0])
     for card in cards:
@@ -305,8 +309,8 @@ async def handle(bot: Bot, event: MessageEvent, state: T_State):
 help = on_command('帮助',rule=to_me(),priority=5,permission=GROUP_ADMIN|GROUP_OWNER|PRIVATE_FRIEND|SUPERUSER,)
 @help.handle()#启动动态推送
 async def handle(bot: Bot, event: MessageEvent, state: T_State):
-    menu='HanayoriBot目前支持的功能：\n(请将UID替换为需操作的B站UID)\n关注 UID\n取关 UID\n列表\n开启动态 UID\n关闭动态 UID\n开启直播 UID\n关闭直播 UID\n开启全体 UID\n关闭全体 UID\n'
-    info='当前版本：v0.1Beta1\n作者：鹿乃ちゃんの猫\n反馈邮箱：kano@hanayori.top'
+    menu='HanayoriBot目前支持的功能：\n(请将UID替换为需操作的B站UID)\n关注 UID\n取关 UID\n列表\n开启动态 UID\n关闭动态 UID\n开启直播 UID\n关闭直播 UID\n开启全体 UID\n关闭全体 UID\n帮助\n'
+    info='当前版本：v0.3\n作者：鹿乃ちゃんの猫\n反馈邮箱：kano@hanayori.top'
     msg=menu+info
     Msg=Message(msg)
     await help.finish(Msg)

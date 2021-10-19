@@ -1,11 +1,12 @@
 import sqlite3
-from typing import Dict, List
+from typing import List
+from nonebot.log import logger
 def Init():
     DB=sqlite3.connect('bilibili.db')
     CUR=DB.cursor()
     CUR.execute('select count(*) from sqlite_master where type="table" and name = "anchor_list"')
     if CUR.fetchall()[0][0]==0:
-        CUR.execute('create table anchor_list (id TEXT,name TEXT,dynamic_id TEXT,live_exist INTERGER,live_status INTERGER)')
+        CUR.execute('create table anchor_list (id TEXT,name TEXT,dynamic_id TEXT,live_exist INTEGER,live_status INTEGER)')
         DB.commit()
     CUR.close()
     DB.close()
@@ -15,11 +16,11 @@ def AddNewAnchor(Mid:str,anchor:str,live_exist:int):#创建主播对应的表
     Name='_'+Mid
     CUR.execute('select count(*) from sqlite_master where type="table" and name = "{}"'.format(Name))
     if CUR.fetchall()[0][0]==0:
-        CUR.execute("create table {} (id TEXT,is_group INTERGER,dynamic INTERGER,live INTERGER,at INTERGER)".format(Name))
+        CUR.execute("create table {} (id TEXT,is_group INTEGER,dynamic INTEGER,live INTEGER,at INTEGER)".format(Name))
         CUR.execute('insert into anchor_list values("{}","{}","",{},0)'.format(Mid,anchor,live_exist))
         DB.commit()
     else:
-        print("主播记录已存在！")
+        logger.warning("主播记录已存在！")
     CUR.close()
     DB.close()
 def AddCard(Mid:str,ID:str,group:int,Live:int=1)->int: #添加主播信息 返回类型 记录是否已存在(int)1：存在
@@ -28,7 +29,7 @@ def AddCard(Mid:str,ID:str,group:int,Live:int=1)->int: #添加主播信息 返�
     Name='_'+Mid
     CUR.execute('select count(*) from {} where id="{}" and is_group={}'.format(Name,ID,group))
     if CUR.fetchall()[0][0] !=0:
-        print('当前群组/私聊记录已存在！')
+        logger.warning('当前群组/私聊记录已存在！')
         return 1
     CUR.execute('insert into {} values("{}",{},{},{},{})'.format(Name,ID,str(group),str(1),str(Live),str(0)))
     DB.commit()
@@ -41,7 +42,7 @@ def DeleteCard(Mid:str,ID:str,group:int):#删除主播信息 返回类型 删除
     Name='_'+Mid
     CUR.execute('select count(*) from {} where id="{}" and is_group={}'.format(Name,ID,group))
     if CUR.fetchall()[0][0]==0:
-        print('记录不存在！删除失败！')
+        logger.error('记录不存在！删除失败！')
         return 1
     CUR.execute('delete from {} where id="{}" and is_group={}'.format(Name,ID,group))
     CUR.execute('select count(*) from {}'.format(Name))
@@ -148,7 +149,7 @@ def GetAnchorInfo(mid:str)->List:
     res=[]
     DB=sqlite3.connect('bilibili.db')
     CUR=DB.cursor()
-    CUR.execute('select * from anchor_list where id={}'.format(mid))
+    CUR.execute('select * from anchor_list where id="{}"'.format(mid))
     data=CUR.fetchall()
     if len(data)!=0:
         res=data[0]
@@ -158,14 +159,14 @@ def GetAnchorInfo(mid:str)->List:
 def UpdateLive(mid:str,status:int):
     DB=sqlite3.connect('bilibili.db')
     CUR=DB.cursor()
-    CUR.execute('update anchor_list set live_status={} where id={}'.format(status,mid))
+    CUR.execute('update anchor_list set live_status={} where id="{}"'.format(status,mid))
     DB.commit()
     CUR.close()
     DB.close()
 def UpdateDynamic(mid:str,dynamicid:str):
     DB=sqlite3.connect('bilibili.db')
     CUR=DB.cursor()
-    CUR.execute('update anchor_list set dynamic_id={} where id={}'.format(dynamicid,mid))
+    CUR.execute('update anchor_list set dynamic_id={} where id="{}"'.format(dynamicid,mid))
     DB.commit()
     CUR.close()
     DB.close()
