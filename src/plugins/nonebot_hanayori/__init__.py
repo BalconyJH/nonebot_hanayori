@@ -310,7 +310,7 @@ help = on_command('帮助',rule=to_me(),priority=5,permission=GROUP_ADMIN|GROUP_
 @help.handle()#启动动态推送
 async def handle(bot: Bot, event: MessageEvent, state: T_State):
     menu='HanayoriBot目前支持的功能：\n(请将UID替换为需操作的B站UID)\n关注 UID\n取关 UID\n列表\n开启动态 UID\n关闭动态 UID\n开启直播 UID\n关闭直播 UID\n开启全体 UID\n关闭全体 UID\n帮助\n'
-    info='当前版本：v0.3\n作者：鹿乃ちゃんの猫\n反馈邮箱：kano@hanayori.top'
+    info='当前版本：v0.4\n作者：鹿乃ちゃんの猫\n反馈邮箱：kano@hanayori.top'
     msg=menu+info
     Msg=Message(msg)
     await help.finish(Msg)
