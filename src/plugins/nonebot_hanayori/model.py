@@ -166,7 +166,7 @@ def UpdateLive(mid:str,status:int):
 def UpdateDynamic(mid:str,dynamicid:str):
     DB=sqlite3.connect('bilibili.db')
     CUR=DB.cursor()
-    CUR.execute('update anchor_list set dynamic_id={} where id="{}"'.format(dynamicid,mid))
+    CUR.execute('update anchor_list set dynamic_id="{}" where id="{}"'.format(dynamicid,mid))
     DB.commit()
     CUR.close()
     DB.close()

@@ -43,7 +43,7 @@ async def LiveRoomInfo(mid:str):#返回格式为状态码(int),直播状态码(i
     LiveTitle=LiveRoom['title']
     LiveCover=LiveRoom['cover']
     text=str(LiveStatus).replace('1','开播').replace('0','下播')
-    return status,LiveStatus,'您关注的 {} {}了！\n'.format(Name,text)+LiveTitle+'\n'+MessageSegment.image(LiveCover)+'\n'+'直播间链接：\n'+LiveURL
+    return status,LiveStatus,'您关注的 {} {}了！\n'.format(Name,text)+'直播间标题：\n'+LiveTitle+'\n'+MessageSegment.image(LiveCover)+'\n'+'直播间链接：\n'+LiveURL
 async def DynamicInfo(DynamicID:str) ->str:
     param={'dynamic_id':DynamicID}
     url='http://api.vc.bilibili.com/dynamic_svr/v1/dynamic_svr/get_dynamic_detail'

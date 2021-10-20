@@ -1,5 +1,5 @@
 from dataclasses import MISSING
-from loguru import logger
+from nonebot.log import logger
 from nonebot import on_command
 from nonebot import rule
 from nonebot import on_request
@@ -47,7 +47,7 @@ async def live():#定时推送直播间状态
             if card[1]==1:#是群聊
                 if card[4]==1:#需要@全体成员
                     await schedBot.call_api('send_msg',**{
-                        'message':MessageSegment.at('all')+content,
+                        'message':MessageSegment.at('all')+' '+content,
                         'group_id':card[0]
                     })
                 else:#不需要@全体成员
@@ -310,7 +310,7 @@ help = on_command('帮助',rule=to_me(),priority=5,permission=GROUP_ADMIN|GROUP_
 @help.handle()#启动动态推送
 async def handle(bot: Bot, event: MessageEvent, state: T_State):
     menu='HanayoriBot目前支持的功能：\n(请将UID替换为需操作的B站UID)\n关注 UID\n取关 UID\n列表\n开启动态 UID\n关闭动态 UID\n开启直播 UID\n关闭直播 UID\n开启全体 UID\n关闭全体 UID\n帮助\n'
-    info='当前版本：v0.4\n作者：鹿乃ちゃんの猫\n反馈邮箱：kano@hanayori.top'
+    info='当前版本：v0.5\n作者：鹿乃ちゃんの猫\n反馈邮箱：kano@hanayori.top'
     msg=menu+info
     Msg=Message(msg)
     await help.finish(Msg)
