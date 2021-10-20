@@ -5,7 +5,7 @@ with open("README.md", "r",encoding='UTF-8') as fh:
     long_description = fh.read()
 
 setup(name='nonebot_plugin_hanayori',
-      version='0.3',   
+      version='0.4',   
       description='基于NoneBot2的B站动态推送与开播提醒插件',
       long_description=long_description,
       long_description_content_type="text/markdown",  
